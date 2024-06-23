@@ -1,4 +1,4 @@
-name: Set From Bricks Backend
+name: Generate for kotlin
 
 on:
   push:
