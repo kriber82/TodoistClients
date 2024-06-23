@@ -24,9 +24,9 @@ openApiGenerate {
     generatorName.set("kotlin")
     setInputSpec(file("$rootDir/../OpenApi/todoist_rest_v2_openapi-3.1.0.yml").toURI().toString())
     outputDir.set("${layout.buildDirectory.get()}/generated")
-    apiPackage.set("de.kristianbergmann.todoist.api")
-    invokerPackage.set("de.kristianbergmann.todoist.invoker")
-    modelPackage.set("de.kristianbergmann.todoist.model")
+    apiPackage.set("de.kristianbergmann.todoistclient.api")
+    invokerPackage.set("de.kristianbergmann.todoistclient.invoker")
+    modelPackage.set("de.kristianbergmann.todoistclient.model")
     configOptions.put("dateLibrary", "java8")
     configOptions.put("omitGradleWrapper", "true")
 }

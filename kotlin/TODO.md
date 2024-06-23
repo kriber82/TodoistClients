@@ -1,4 +1,5 @@
 - add usage example code
+- include hints for graalvm native image building in jar
 - see if there is a generator for a good mock server
 - publish to maven central
 - add other language clients
