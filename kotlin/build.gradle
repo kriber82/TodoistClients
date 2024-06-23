@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '2.0.0'
+    id 'base'
     id 'org.openapi.generator' version "7.6.0"
 }
 
@@ -17,24 +17,25 @@ dependencies {
     //implementation 'com.squareup.moshi:moshi-adapters:1.15.1'
     //implementation 'com.squareup.okhttp3:okhttp:4.12.0'
 }
-
-openApiGenerate {
+task generateKotlinClient(type:org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
     id.set("todoist-rest-v2-client-kotlin")
     version.set("0.1.0")
     generatorName.set("kotlin")
     setInputSpec(file("$rootDir/../OpenApi/todoist_rest_v2_openapi-3.1.0.yml").toURI().toString())
-    outputDir.set("${layout.buildDirectory.get()}/generated")
+    outputDir.set("$rootDir/generated/client")
     apiPackage.set("de.kristianbergmann.todoistclient.api")
     invokerPackage.set("de.kristianbergmann.todoistclient.invoker")
     modelPackage.set("de.kristianbergmann.todoistclient.model")
     configOptions.put("dateLibrary", "java8")
     configOptions.put("omitGradleWrapper", "true")
 }
-task openApiBuild(type:GradleBuild) {
-    dir = file("${layout.buildDirectory.get()}/generated")
+task buildKotlinClient(type:GradleBuild) {
+    dir = file("$rootDir/generated/client")
     tasks = ['build']
 }
-openApiBuild.dependsOn tasks.openApiGenerate
+buildKotlinClient.dependsOn tasks.generateKotlinClient
+
+tasks.build.dependsOn buildKotlinClient
 
 /*
 test {

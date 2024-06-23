@@ -28,15 +28,20 @@ jobs:
       - name: Build with Gradle
         run: |
           chmod a+x ./gradlew
-          ./gradlew clean openApiBuild
+          ./gradlew clean build
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v4
         if: success() || failure() # always run even if the previous step fails
         with:
           report_paths: '**/build/test-results/test*/TEST-*.xml'
-      - name: Step 3 - Use the Upload Artifact GitHub Action
+      - name: Upload kotlin-client artifact
         uses: actions/upload-artifact@v3
         with: 
           name: todoist-kotlin-client
-          path: kotlin/build/generated/build/libs
-          
+          path: kotlin/generated/client/build/libs
+      - name: Upload kotlin-server artifact
+        uses: actions/upload-artifact@v3
+        with: 
+          name: todoist-kotlin-server-stub
+          path: kotlin/generated/server/build/libs
+            
