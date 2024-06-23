@@ -1,5 +1,8 @@
-- add usage example code
+- release built jar(s) in repo
+- publish to maven central
 - include hints for graalvm native image building in jar
 - see if there is a generator for a good mock server
-- publish to maven central
+    - kotlin-server seems to contain only a server stub which is not very suitable for unit-testing. It also requires some effort to build (especially using older gradle versions)
+    - kotlin-spring seems to contain only a server stub which is not very suitable for unit-testing. Building wasn't straightforward, and I quit the effort for now.
+    - kotlin-vertx might be more than a server stub (don't understand vertex well enough to judge from a glance). Building was not straightforward and the generated code contained errors.
 - add other language clients

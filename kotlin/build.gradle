@@ -6,44 +6,35 @@ plugins {
 group = 'de.kristianbergmann'
 version = '1.0-SNAPSHOT'
 
+def rootJavaPackage = "de.kristianbergmann"
+def todoistOpenApiPath = "$rootDir/../OpenApi/todoist_rest_v2_openapi-3.1.0.yml"
+
 repositories {
     mavenCentral()
 }
 
-//TODO needed for using the generated Todoist API - better way to include?
-dependencies {
-    //implementation files("${layout.buildDirectory.get()}/generated/build/libs/todoist-rest-v2-client-kotlin-0.1.0.jar")
-    //implementation 'com.squareup.moshi:moshi-kotlin:1.15.1'
-    //implementation 'com.squareup.moshi:moshi-adapters:1.15.1'
-    //implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+
+def kotlinClientDir = "$rootDir/generated/client"
+def kotlinClientJavaPackage = "${rootJavaPackage}.todoistclient"
+task cleanKotlinClient(type:Delete) {
+    delete kotlinClientDir
 }
 task generateKotlinClient(type:org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
     id.set("todoist-rest-v2-client-kotlin")
     version.set("0.1.0")
     generatorName.set("kotlin")
-    setInputSpec(file("$rootDir/../OpenApi/todoist_rest_v2_openapi-3.1.0.yml").toURI().toString())
-    outputDir.set("$rootDir/generated/client")
-    apiPackage.set("de.kristianbergmann.todoistclient.api")
-    invokerPackage.set("de.kristianbergmann.todoistclient.invoker")
-    modelPackage.set("de.kristianbergmann.todoistclient.model")
+    setInputSpec(file(todoistOpenApiPath).toURI().toString())
+    outputDir.set(kotlinClientDir)
+    apiPackage.set("${kotlinClientJavaPackage}.api")
+    invokerPackage.set("${kotlinClientJavaPackage}.invoker")
+    modelPackage.set("${kotlinClientJavaPackage}.model")
     configOptions.put("dateLibrary", "java8")
     configOptions.put("omitGradleWrapper", "true")
 }
 task buildKotlinClient(type:GradleBuild) {
-    dir = file("$rootDir/generated/client")
+    dir = file(kotlinClientDir)
     tasks = ['build']
 }
+tasks.clean.dependsOn cleanKotlinClient
 buildKotlinClient.dependsOn tasks.generateKotlinClient
-
 tasks.build.dependsOn buildKotlinClient
-
-/*
-test {
-    useJUnitPlatform()
-}
-
-
-kotlin {
-    jvmToolchain(21)
-}
-*/
