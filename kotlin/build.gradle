@@ -1,0 +1,48 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.0.0'
+    id 'org.openapi.generator' version "7.6.0"
+}
+
+group = 'de.kristianbergmann'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+//TODO needed for using the generated Todoist API - better way to include?
+dependencies {
+    //implementation files("${layout.buildDirectory.get()}/generated/build/libs/todoist-rest-v2-client-kotlin-0.1.0.jar")
+    //implementation 'com.squareup.moshi:moshi-kotlin:1.15.1'
+    //implementation 'com.squareup.moshi:moshi-adapters:1.15.1'
+    //implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+}
+
+openApiGenerate {
+    id.set("todoist-rest-v2-client-kotlin")
+    version.set("0.1.0")
+    generatorName.set("kotlin")
+    setInputSpec(file("$rootDir/../OpenApi/todoist_rest_v2_openapi-3.1.0.yml").toURI().toString())
+    outputDir.set("${layout.buildDirectory.get()}/generated")
+    apiPackage.set("de.kristianbergmann.todoist.api")
+    invokerPackage.set("de.kristianbergmann.todoist.invoker")
+    modelPackage.set("de.kristianbergmann.todoist.model")
+    configOptions.put("dateLibrary", "java8")
+    configOptions.put("omitGradleWrapper", "true")
+}
+task openApiBuild(type:GradleBuild) {
+    dir = file("${layout.buildDirectory.get()}/generated")
+    tasks = ['build']
+}
+openApiBuild.dependsOn tasks.openApiGenerate
+
+/*
+test {
+    useJUnitPlatform()
+}
+
+
+kotlin {
+    jvmToolchain(21)
+}
+*/

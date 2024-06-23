@@ -1,0 +1,4 @@
+- add usage example code
+- see if there is a generator for a good mock server
+- publish to maven central
+- add other language clients
