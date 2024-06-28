@@ -2,7 +2,14 @@
 - publish to maven central
 - include hints for graalvm native image building in jar
 - see if there is a generator for a good mock server
+    - java-msf4j: looks promising, but contrived. defines controller interface. no idea how to start server, though. - dependencies from 2020 :-/
+    - java-play-framework: might be worth a shot. controller impl looks simple enough. rest looks overly contrived. several warnings in vs code. No java default way to build :-/
+    - java-microprofile: looks promising. defines controller interface, but with many annotations. POM :-/ no idea how to start server, though. Just one missing dependency in pom... setting up a microprofile server is everything, but not simple
     - kotlin-server seems to contain only a server stub which is not very suitable for unit-testing. It also requires some effort to build (especially using older gradle versions)
     - kotlin-spring seems to contain only a server stub which is not very suitable for unit-testing. Building wasn't straightforward, and I quit the effort for now.
     - kotlin-vertx might be more than a server stub (don't understand vertex well enough to judge from a glance). Building was not straightforward and the generated code contained errors.
+    - java-camel: don't understand how to tie in to the generated code
+    - java-inflector: looks OK, downside: binding code by convention, would prefer an interface
+    - java-pkmst: looks too complicated
+    - java-undertow-server: files way too big
 - add other language clients
