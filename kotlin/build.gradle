@@ -21,7 +21,7 @@ task cleanKotlinClient(type:Delete) {
 }
 task generateKotlinClient(type:org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
     id.set("todoist-rest-v2-client-kotlin")
-    version.set("0.3.0")
+    version.set("0.4.0")
     generatorName.set("kotlin")
     setInputSpec(file(todoistOpenApiPath).toURI().toString())
     outputDir.set(kotlinClientDir)

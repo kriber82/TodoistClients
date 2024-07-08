@@ -1647,6 +1647,9 @@ components:
         string:
           type: string
           description: Human defined date in arbitrary format.
+        lang:
+          type: string
+          description: NOT OFFICIALLY DOCUMENTED. 2-letter code specifying language of string.
         date:
           type: string
           format: date
